@@ -1,0 +1,73 @@
+package myjavaprograms;
+
+public class StringManipulation {
+
+	public static void main(String[] args) {
+		
+		String S = "my.song.mp3 11b\n" +
+				"greatSong.flac 1000b\n"
+				+ "not3.txt 5b\n"
+				+ "video.mp4 200b\n"
+				+ "game.exe 100b\n"
+				+ "movie.mkv 10000b\n";
+		System.out.println("Good String " + solution(S));
+		
+	}
+	
+	public static String solution(String S) 
+	{
+		
+		int totalMusic = 0, totalMovies = 0, totalImage = 0, totalOther = 0;
+		
+		String nextLine = "", fileType = "", fileSize = "", remaining = S;
+		String arranged_S = "";
+		
+		boolean finished = false;
+		
+		while(!finished)
+			if(remaining.substring(remaining.indexOf("\n")).equals("\n")) { //Check if this is the last line of 'remaining'
+				
+				nextLine = remaining.substring(0, remaining.indexOf("\n"));
+				fileType = nextLine.substring(nextLine.lastIndexOf(".") + 1, nextLine.indexOf(" "));
+				fileSize = nextLine.substring(nextLine.indexOf(" ") + 1, nextLine.length() - 1);
+				
+				if(fileType.equalsIgnoreCase("mp3") || fileType.equalsIgnoreCase("flac") || fileType.equalsIgnoreCase("aac"))
+					totalMusic = totalMusic + Integer.parseInt(fileSize);
+				else if(fileType.equalsIgnoreCase("jpg") || fileType.equalsIgnoreCase("bmp") || fileType.equalsIgnoreCase("gif"))
+					totalImage = totalImage + Integer.parseInt(fileSize);
+				else if(fileType.equalsIgnoreCase("mp4") || fileType.equalsIgnoreCase("avi") || fileType.equalsIgnoreCase("mkv"))
+					totalMovies = totalMovies + Integer.parseInt(fileSize);
+				else
+					totalOther = totalOther + Integer.parseInt(fileSize);
+				
+				finished = true;
+			}
+			
+			else 
+			{
+			
+				nextLine = remaining.substring(0, remaining.indexOf("\n"));
+				fileType = nextLine.substring(nextLine.lastIndexOf(".") + 1, nextLine.indexOf(" "));
+				fileSize = nextLine.substring(nextLine.indexOf(" ") + 1, nextLine.length() - 1);
+				if(fileType.equalsIgnoreCase("mp3") || fileType.equalsIgnoreCase("flac") || fileType.equalsIgnoreCase("aac"))
+					totalMusic = totalMusic + Integer.parseInt(fileSize);
+				else if(fileType.equalsIgnoreCase("jpg") || fileType.equalsIgnoreCase("bmp") || fileType.equalsIgnoreCase("gif"))
+					totalImage = totalImage + Integer.parseInt(fileSize);
+				else if(fileType.equalsIgnoreCase("mp4") || fileType.equalsIgnoreCase("avi") || fileType.equalsIgnoreCase("mkv"))
+					totalMovies = totalMovies + Integer.parseInt(fileSize);
+				else
+					totalOther = totalOther + Integer.parseInt(fileSize);
+				remaining = remaining.substring(remaining.indexOf("\n") + 1);
+				//System.out.println("remaining = " + fileSize);
+			}
+			
+			arranged_S = "Movies: " + totalMovies +
+						"\nMusic: " + totalMusic + 
+						"\nImages: " + totalImage + 
+						"\nOther: " + totalOther;
+		
+		return arranged_S;
+	}
+	
+}
+
